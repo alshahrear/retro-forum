@@ -4,6 +4,8 @@ const allPost = async () => {
     const posts = Array.isArray(data.posts) ? data.posts : [];
     // console.log(posts);    
     displayPosts(posts);
+    // activeBallColor(posts);
+   
 }
 
 
@@ -22,7 +24,7 @@ const displayLatestPosts = (posts) => {
     const latestCard = document.createElement('div');
     latestCard.innerHTML = `
     <div class=" border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
-                <div class="bg-[#f8f8f8] w-72 h-38 rounded-2xl ">
+                <div class="bg-[#f8f8f8] rounded-2xl ">
                     <img class="rounded-xl" src="${post.cover_image}" alt="">
                 </div>
                 <div class="flex gap-3">
@@ -49,17 +51,21 @@ const displayLatestPosts = (posts) => {
 };
 
 
+
 const displayPosts = posts => {
+    
     const postContainer = document.getElementById('post-container');
     posts.forEach(post =>{
         // console.log(post);
-        const postCard = document.createElement('div');   
+        
+        const postCard = document.createElement('div');
         postCard.innerHTML = `      
         <div class="">
                 <div class="flex w-[650px] bg-[#797DFC1A] rounded-2xl p-10">
-                    <div class="bg-white rounded-2xl w-20 h-20">
-                    <img class="rounded-xl" src="${post.image}" alt="">
+                    <div class=" rounded-xl w-[70px] ">
+                    <img class="rounded-xl relative" src="${post.image}" alt="">
                     </div>
+                    <div class="active-ball bg-red-600  w-4 h-4 ml-14 -mt-1 absolute rounded-full "></div>
                     <div class="space-y-3 pl-4">
                         <div class="flex gap-5 font-semibold">
                             <p># <span>${post.category}</span></p>
@@ -90,10 +96,25 @@ const displayPosts = posts => {
                 </div>
             </div>
         `;
+        
         postContainer.appendChild(postCard);
-    })
+        
+    });
+    // activeBallColor();
+};
 
-}
+// function activeBallColor() {
+//     const activeBalls = document.querySelectorAll('.active-ball');
+//     if(activeBalls === ){
+
+//     }
+//     // activeBalls.forEach(ball => {
+//     //     if(){
+
+//     //     }
+        
+//     // });
+// }
 
 const emailView = (postString) => {
         const post = JSON.parse(decodeURIComponent(postString)); 
@@ -111,7 +132,14 @@ const emailView = (postString) => {
         readDiv.appendChild(createDiv);
     };
 
-
+    let sum = 0;
+    const emailCountView = document.getElementById('email-view');
+    document.addEventListener('click', function readDivCounter(){
+        const readCounter = document.getElementById('read-counter');
+        sum += 1;
+        readCounter.innerText = sum;
+    })
+   
 // function emailView () {
 //     const readDiv = document.getElementById('read-div');
 //     const createDiv = document.createElement('div');
@@ -126,6 +154,8 @@ const emailView = (postString) => {
 //     `
 //     readDiv.appendChild(createDiv);
 // };
+    
 
 allPost();
 latestPost();
+// activeBallColor();
