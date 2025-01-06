@@ -2,7 +2,7 @@ const allPost = async () => {
     const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/posts');
     const data = await res.json();
     const posts = (data.posts);
-    console.log(posts);    
+    // console.log(posts);    
     displayPosts(posts);
 }
 
@@ -18,7 +18,7 @@ const latestPost = async () => {
 const displayLatestPosts = (posts) => {
     const latestContainer = document.getElementById('latest-container');
     posts.forEach(post => {
-        console.log(post);
+        // console.log(post);
     const latestCard = document.createElement('div');
     latestCard.innerHTML = `
     <div class=" border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
@@ -52,11 +52,11 @@ const displayLatestPosts = (posts) => {
 const displayPosts = posts => {
     const postContainer = document.getElementById('post-container');
     posts.forEach(post =>{
-        console.log(post);
+        // console.log(post);
         const postCard = document.createElement('div');   
         postCard.innerHTML = `      
         <div class="">
-                <div class="flex w-[700px] bg-[#797DFC1A] rounded-2xl p-10">
+                <div class="flex w-[650px] bg-[#797DFC1A] rounded-2xl p-10">
                     <div class="bg-white rounded-2xl w-20 h-20">
                     <img class="rounded-xl" src="${post.image}" alt="">
                     </div>
@@ -83,7 +83,7 @@ const displayPosts = posts => {
                                 </div>
                             </div>
                             <div>
-                                <img src="images/email 1.png" alt="">
+                             <img id="email-view" onclick="emailView()" src="images/email 1.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -93,6 +93,20 @@ const displayPosts = posts => {
         postContainer.appendChild(postCard);
     })
     
+}
+const emailView = posts => {
+    const emailView = document.getElementById('read-div');
+    const createDiv = document.createElement('div');
+    createDiv.innerHTML = `
+    <div id="read-div" class="flex w-[450px] rounded-2xl mt-5 p-5 bg-white">
+                                <p class="font-bold">10 Kids Unaware of Their Halloween Costume</p>
+                                <div class="flex items-center gap-2 pr-2">
+                                    <img src="images/Group 16.png" alt="">
+                                    <p>${post.view_count}</p>
+                                </div>
+                            </div>
+    `
+    emailView.appendChild(createDiv);
 }
 
 allPost();
