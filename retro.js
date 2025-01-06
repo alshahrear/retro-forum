@@ -1,7 +1,7 @@
 const allPost = async () => {
     const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/posts');
     const data = await res.json();
-    const posts = (data.posts);
+    const posts = Array.isArray(data.posts) ? data.posts : [];
     // console.log(posts);    
     displayPosts(posts);
 }
@@ -30,8 +30,8 @@ const displayLatestPosts = (posts) => {
                     <p>${post.author?.posted_date || 'No publish date'}</p>
                 </div>
                 <div class="space-y-3">
-                    <p class=" text-lg font-extrabold">What will a mars habitat force that <br> impact in our daily life!!!</p>
-                    <p class="text-[#12132D99]">Yes, you can run unit tests and view the <br> results directly within the app. </p>
+                    <p class=" text-lg font-extrabold">${post.title}</p>
+                    <p class="text-[#12132D99]">${post.description}</p>
                 </div>
                 <div class="flex gap-3">
                     <div class="w-10 h-5 ">
@@ -83,7 +83,7 @@ const displayPosts = posts => {
                                 </div>
                             </div>
                             <div>
-                             <img id="email-view" onclick="emailView()" src="images/email 1.png" alt="">
+                             <img id="email-view" onclick="emailView('${encodeURIComponent(JSON.stringify(post))}')"')" src="images/email 1.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -92,22 +92,40 @@ const displayPosts = posts => {
         `;
         postContainer.appendChild(postCard);
     })
-    
+
 }
-const emailView = posts => {
-    const emailView = document.getElementById('read-div');
-    const createDiv = document.createElement('div');
-    createDiv.innerHTML = `
-    <div id="read-div" class="flex w-[450px] rounded-2xl mt-5 p-5 bg-white">
-                                <p class="font-bold">10 Kids Unaware of Their Halloween Costume</p>
-                                <div class="flex items-center gap-2 pr-2">
-                                    <img src="images/Group 16.png" alt="">
-                                    <p>${post.view_count}</p>
-                                </div>
-                            </div>
-    `
-    emailView.appendChild(createDiv);
-}
+
+const emailView = (postString) => {
+        const post = JSON.parse(decodeURIComponent(postString)); 
+        const readDiv = document.getElementById('read-div');
+        const createDiv = document.createElement('div');
+        createDiv.innerHTML = `
+            <div class="flex justify-between w-[450px] rounded-2xl mt-5 p-5 bg-white">
+                <p class="font-bold">${post.title}</p>
+                <div class="flex  items-center gap-2 pr-2">
+                    <img src="images/Group 16.png" alt="">
+                    <p>${post.view_count || 0}</p>
+                </div>
+            </div>
+        `;
+        readDiv.appendChild(createDiv);
+    };
+
+
+// function emailView () {
+//     const readDiv = document.getElementById('read-div');
+//     const createDiv = document.createElement('div');
+//     createDiv.innerHTML = `
+//     <div class="flex w-[450px] rounded-2xl mt-5 p-5 bg-white">
+//                                 <p class="font-bold">10 Kids Unaware of Their Halloween Costume</p>
+//                                 <div class="flex items-center gap-2 pr-2">
+//                                     <img src="images/Group 16.png" alt="">
+//                                     <p></p>
+//                                 </div>
+//                             </div>
+//     `
+//     readDiv.appendChild(createDiv);
+// };
 
 allPost();
 latestPost();
