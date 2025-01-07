@@ -1,26 +1,46 @@
-const allPost = async () => {
-    const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/posts');
+const allPost = async (searchText) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
     const data = await res.json();
-    const posts = Array.isArray(data.posts) ? data.posts : [];
-    // console.log(posts);    
+    const posts = Array.isArray(data.posts) ? data.posts : [];    
     displayPosts(posts);
-    // activeBallColor(posts);
+    
+    const filteredPosts = searchText 
+        ? posts.filter(post => post.category.toLowerCase().includes(searchText.toLowerCase())) 
+        : posts;
+
+    displayPosts(filteredPosts);
    
-}
+};
 
 
 const latestPost = async () => {
     const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts');
     const data = await res.json();
     const posts = (data);
-    // console.log(posts);
     displayLatestPosts(posts);
 }
+
+
+const handleSearch = () =>{
+    toggleSpinner(true);
+    const searchField = document.getElementById('search-field');
+    const searchText = searchField.value;
+    allPost(searchText);
+    searchField.value ='';
+};
+
+const toggleSpinner = (isLoading) =>{
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if(isLoading){
+        loadingSpinner.classList.remove('hidden');
+    }else{
+        loadingSpinner.classList.add('hidden');
+    }
+};
 
 const displayLatestPosts = (posts) => {
     const latestContainer = document.getElementById('latest-container');
     posts.forEach(post => {
-        // console.log(post);
     const latestCard = document.createElement('div');
     latestCard.innerHTML = `
     <div class=" border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
@@ -55,9 +75,8 @@ const displayLatestPosts = (posts) => {
 const displayPosts = posts => {
     
     const postContainer = document.getElementById('post-container');
-    posts.forEach(post =>{
-        // console.log(post);
-        
+    postContainer.innerHTML = "";
+    posts.forEach(post =>{ 
         const postCard = document.createElement('div');
         postCard.innerHTML = `      
         <div class="">
@@ -65,7 +84,7 @@ const displayPosts = posts => {
                     <div class=" rounded-xl w-[70px] ">
                     <img class="rounded-xl relative" src="${post.image}" alt="">
                     </div>
-                    <div class="active-ball bg-red-600  w-4 h-4 ml-14 -mt-1 absolute rounded-full "></div>
+                    <div class="active-bal w-4 h-4 ml-14 -mt-1 absolute rounded-full ${post.isActive ? 'bg-green-600' : 'bg-red-600'} "></div>
                     <div class="space-y-3 pl-4">
                         <div class="flex gap-5 font-semibold">
                             <p># <span>${post.category}</span></p>
@@ -100,22 +119,12 @@ const displayPosts = posts => {
         postContainer.appendChild(postCard);
         
     });
-    // activeBallColor();
+    setTimeout(() => {
+        toggleSpinner(false);
+    }, 2000);
 };
 
-// function activeBallColor() {
-//     const activeBalls = document.querySelectorAll('.active-ball');
-//     if(activeBalls === ){
-
-//     }
-//     // activeBalls.forEach(ball => {
-//     //     if(){
-
-//     //     }
-        
-//     // });
-// }
-
+ 
 const emailView = (postString) => {
         const post = JSON.parse(decodeURIComponent(postString)); 
         const readDiv = document.getElementById('read-div');
@@ -140,22 +149,5 @@ const emailView = (postString) => {
         readCounter.innerText = sum;
     })
    
-// function emailView () {
-//     const readDiv = document.getElementById('read-div');
-//     const createDiv = document.createElement('div');
-//     createDiv.innerHTML = `
-//     <div class="flex w-[450px] rounded-2xl mt-5 p-5 bg-white">
-//                                 <p class="font-bold">10 Kids Unaware of Their Halloween Costume</p>
-//                                 <div class="flex items-center gap-2 pr-2">
-//                                     <img src="images/Group 16.png" alt="">
-//                                     <p></p>
-//                                 </div>
-//                             </div>
-//     `
-//     readDiv.appendChild(createDiv);
-// };
-    
-
 allPost();
 latestPost();
-// activeBallColor();

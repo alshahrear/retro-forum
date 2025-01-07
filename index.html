@@ -16,17 +16,17 @@
     <header class="ml-20 mt-5 mr-20">
         <section class="flex justify-between items-center pr-8">
             <div>
-                <h3 class="text-3xl font-bold">ReTro</h3>
+                <h3 class="text-3xl font-extrabold">ReTro</h3>
             </div>
             <div class="flex">
-                <div class="flex justify-around w-80">
+                <div class="flex justify-evenly w-80">
                     <a><img title="Home" src="images/Frame 2.png" alt=""></a>
                     <a><img title="Edit" src="images/Frame 3.png" alt=""></a>
                     <a><img title="Add" src="images/Frame 4.png" alt=""></a>
                     <a><img title="Flag" src="images/Frame 5.png" alt=""></a>
                 </div>
                 <div>
-                    <button class="btn text-white rounded-3xl pl-8 pr-8 bg-[#797DFC]">Sign in</button>
+                    <button class="btn text-white rounded-3xl  pl-8 pr-8 bg-[#797DFC]">Sign in</button>
                 </div>
             </div>
         </section>
@@ -40,8 +40,8 @@
                     <p></p>
                     <p class="text-[#FFFFFFCC]">Share your favorite opinion and win and wp <br> forum coffee mug!</p>
                     <div class="search-container">
-                        <input type="text" placeholder="Search here anything" class="search-input">
-                        <button class="search-button">Search</button>
+                        <input id="search-field" type="text" placeholder="Search here anything" class="search-input">
+                        <button onclick="handleSearch()" class="search-button pt-3 pb-3 pl-6 pr-6 rounded-3xl">Search</button>
                     </div>
                 </div>
                 <div class="bg-white text-xl rounded-xl p-5 space-y-6">
@@ -54,11 +54,16 @@
         </section>
     </header>
     <main class="ml-20 mr-20">
-        <section class="mt-10 text-center mb-10">
+        <section class="mt-10 text-center mb-7">
             <div class="space-y-4">
                 <h3 class="text-3xl font-extrabold">Let's Discuss</h3>
                 <p class="text-[#12132D99]">Yes, you can run unit tests and view the results directly within the app.
                     The <br> integrated testing features allow for a streamlined .</p>
+            </div>
+        </section>
+        <section>
+            <div id="loading-spinner" class="text-center mb-7 hidden">
+                <span class="loading loading-spinner loading-lg"></span>
             </div>
         </section>
         <!-- allPost API............... -->
@@ -80,83 +85,12 @@
                             <div id="read-div">
 
                             </div>
-                            <!-- <div  class="flex w-[450px] rounded-2xl mt-5 p-5 bg-white">
-                                <p class="font-bold">10 Kids Unaware of Their Halloween Costume</p>
-                                <div class="flex items-center gap-2 pr-2">
-                                    <img src="images/Group 16.png" alt="">
-                                    <p>1,568</p>
-                                </div>
-                            </div> -->
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- <section id="post-container" class="mb-10 space-y-5">
-           title............ -->
-                        <!-- <div class="flex">
-                            <div class="bg-[#12132D0D] rounded-2xl p-5">
-                                <div class="flex gap-10">
-                                    <p class=" font-bold">Title</p>
-                                    <div class="flex gap-2">
-                                        <img src="images/Frame.png" alt="">
-                                        <p class="text-[#12132D99]">Mark as read (<span>4</span>)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --> 
-
-            <!-- <div class="flex">
-                <div class="">
-                    <div class=""> -->
-                        <!-- <div class="flex bg-[#797DFC1A] rounded-2xl p-10">
-                            <div class="bg-white rounded-2xl w-20 h-20">
-                                <img src="images/logo.png" alt="">
-                            </div>
-                            <div class="space-y-3 pl-4">
-                                <div class="flex gap-5 font-semibold">
-                                    <p># <span>Music</span></p>
-                                    <p>Author : <span>Awlad Hossain</span></p>
-                                </div>
-                                <p class=" text-xl font-bold">10 Kids Unaware of Their Halloween Costume</p>
-                                <p class="text-[#12132D99] pb-3 border-b-2 border-dashed">It's one thing to subject yourself to ha Halloween costume mishap because, <br> hey that's your prerogative</p>
-                                <div class="flex justify-between">
-                                    <div class="flex gap-6">
-                                        <div class="flex gap-2">
-                                            <img src="images/Group 13.png" alt="">
-                                            <p>560</p>
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <img src="images/Group 16.png" alt="">
-                                            <p>1,568</p>
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <img src="images/Group 18.png" alt="">
-                                            <p>5 min</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <img src="images/email 1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-        
-                        <!-- title............ -->
-                        <!-- <div class="bg-[#12132D0D] rounded-2xl p-5">
-                            <div class="flex gap-10">
-                                <p class=" font-bold">Title</p>
-                                <div class="flex gap-2">
-                                    <img src="images/Frame.png" alt="">
-                                    <p class="text-[#12132D99]">Mark as read (<span>4</span>)</p>
-                                </div>
-                            </div>
-                        </div> -->
-                    <!-- </div>
-                </div>
-            </div> -->
-        <!-- </section> -->
         <section>
             <div class="flex justify-between p-10 bg-no-repeat rounded-3xl  items-center "
                 style="background-image: url('images/Rectangle\ 1.png')">
@@ -182,72 +116,7 @@
 
         <!-- LatestPosts.......... -->
         <section id="latest-container" class=" flex gap-5">
-            <!-- <div class="border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
-                <div class="bg-[#f8f8f8] w-72 h-40 rounded-2xl ">
-                    <img src="" alt="">
-                </div>
-                <div class="flex gap-3">
-                    <img src="images/Frame (1).png" alt="">
-                    <p>29 January 2024</p>
-                </div>
-                <div class="space-y-3">
-                    <p class=" text-lg font-extrabold">What will a mars habitat force that <br> impact in our daily life!!!</p>
-                    <p class="text-[#12132D99]">Yes, you can run unit tests and view the <br> results directly within the app. </p>
-                </div>
-                <div class="flex gap-3 ">
-                    <div >
-                        <img src="images/Group 13.png" alt="">
-                    </div>
-                    <div>
-                        <p class=" font-bold">Cameron Williamson</p>
-                        <p>Unknown</p>
-                    </div>
-                </div>
-            </div>
-            <div class="border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
-                <div class="bg-[#f8f8f8] w-72 h-40 rounded-2xl ">
-                    <img src="" alt="">
-                </div>
-                <div class="flex gap-3">
-                    <img src="images/Frame (1).png" alt="">
-                    <p>29 January 2024</p>
-                </div>
-                <div class="space-y-3">
-                    <p class=" text-lg font-extrabold">What will a mars habitat force that <br> impact in our daily life!!!</p>
-                    <p class="text-[#12132D99]">Yes, you can run unit tests and view the <br> results directly within the app. </p>
-                </div>
-                <div class="flex gap-3">
-                    <div>
-                        <img src="images/Group 13.png" alt="">
-                    </div>
-                    <div>
-                        <p class=" font-bold">Cameron Williamson</p>
-                        <p>Unknown</p>
-                    </div>
-                </div>
-            </div>
-            <div class="border-2 p-5 space-y-6 border-[#12132D0D] rounded-2xl">
-                <div class="bg-[#f8f8f8] w-72 h-40 rounded-2xl ">
-                    <img src="" alt="">
-                </div>
-                <div class="flex gap-3">
-                    <img src="images/Frame (1).png" alt="">
-                    <p>29 January 2024</p>
-                </div>
-                <div class="space-y-3">
-                    <p class=" text-lg font-extrabold">What will a mars habitat force that <br> impact in our daily life!!!</p>
-                    <p class="text-[#12132D99]">Yes, you can run unit tests and view the <br> results directly within the app. </p>
-                </div>
-                <div class="flex gap-3">
-                    <div>
-                        <img src="images/Group 13.png" alt="">
-                    </div>
-                    <div>
-                        <p class=" font-bold">Cameron Williamson</p>
-                        <p>Unknown</p>
-                    </div>
-                </div>
-            </div> -->
+            
         </section>
 
     </main>
